@@ -9,6 +9,7 @@
 #include "Items/Item.h"
 #include "Items/Weapons/Weapon.h"
 #include "Animation/AnimMontage.h"
+#include "Components/BoxComponent.h"
 
 ASlashCharacter::ASlashCharacter()
 {
@@ -49,6 +50,14 @@ void ASlashCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+void ASlashCharacter::SetWeaponCollisionEnabled(ECollsionEabled::Type CollsionEabled) {
+	if (EquippedWeapon && EquippedWeapon->GetWeaponBox()) {
+		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(CollsionEabled);
+		EquippedWeapon->IgonreActors.Empty();
+	}
+}
+
 
 void ASlashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -197,7 +206,7 @@ void ASlashCharacter::PlayAttackMontage()
 	}
 }
 
-void ASlashCharacter::PlayEquipMontage(FName SectionName)
+void ASlashCharacter::PlayEquipMontage(const FName& SectionName)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (AnimInstance && EquipMontage)

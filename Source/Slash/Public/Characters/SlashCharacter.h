@@ -23,6 +23,11 @@ public:
 	ASlashCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollisionEnabled(ECollsionEabled::Type CollsionEabled);
+	
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -45,7 +50,7 @@ protected:
 	void AttackEnd();
 	bool CanAttack();
 
-	void PlayEquipMontage(FName SectionName);
+	void PlayEquipMontage(const FName& SectionName);
 	bool CanDisarm();
 	bool CanArm();
 
