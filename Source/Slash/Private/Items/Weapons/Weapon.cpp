@@ -8,6 +8,7 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Interfaces/HitInterface.h"
+#include "NiagaraComponent.h"
 AWeapon::AWeapon() {
 	WeaponBox = CreateDefaultSubobject<USceneComponent>(TEXT("Weapon Box"));
 	WeaponBox->SetupAttachment(GetRootComponent());
@@ -44,6 +45,10 @@ void AWeapon::Equip(USceneComponent* InParent, FName InSocketName)
 
  	if (Sphere) {
  		Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+ 	}
+
+ 	if (EmbersEffect) {
+ 		EmbersEffect->Deactivate();
  	}
 
  }
@@ -100,7 +105,7 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 			HitInterface->Execute_GetHit(BoxHit.GetActor(), BoxHit.ImpactPoint);
 		}
 		IgnoreActors.AddUnique(BoxHit.GetActor());
-
+ 
 		CreateFields(BoxHit.ImpactPoint);
 	}
 }
